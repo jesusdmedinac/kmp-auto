@@ -2,6 +2,7 @@ package io.github.kmpauto.core.navigation
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class AutoNavigatorTest {
 
@@ -63,5 +64,47 @@ class AutoNavigatorTest {
         kotlin.test.assertFailsWith<BackstackOverflowException> {
             navigator.push(TestScreen("Screen 3"))
         }
+    }
+
+    @Test
+    fun scenario3_poppingScreensAndReturningToRoot() {
+        // Given an AutoNavigator with 4 screens on the backstack
+        val root = TestScreen("Root")
+        val screen2 = TestScreen("Screen 2")
+        val screen3 = TestScreen("Screen 3")
+        val screen4 = TestScreen("Screen 4")
+
+        val navigator = AutoNavigator(root = root)
+        navigator.push(screen2)
+        navigator.push(screen3)
+        navigator.push(screen4)
+        assertEquals(4, navigator.depth)
+
+        // When calling pop
+        val popped = navigator.pop()
+
+        // Then the active stack depth should be 3
+        assertTrue(popped)
+        assertEquals(3, navigator.depth)
+        assertEquals(screen3, navigator.top)
+
+        // When calling popToRoot
+        navigator.popToRoot()
+
+        // Then the active stack depth should be 1
+        assertEquals(1, navigator.depth)
+        // And the top screen should be the initial root screen
+        assertEquals(root, navigator.top)
+    }
+
+    @Test
+    fun scenario3_poppingAtRootReturnsFalse() {
+        val root = TestScreen("Root")
+        val navigator = AutoNavigator(root = root)
+
+        val popped = navigator.pop()
+        kotlin.test.assertFalse(popped)
+        assertEquals(1, navigator.depth)
+        assertEquals(root, navigator.top)
     }
 }
