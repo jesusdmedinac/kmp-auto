@@ -12,7 +12,7 @@
 
 ## Milestone 3: Feature - Unified Declarative Templates (#2)
 - [x] Scenario: Creating a List Template with sections and actions (`templates.feature:Scenario 1`)
-- [ ] Scenario: Creating a Grid Template with grid buttons (`templates.feature:Scenario 2`)
+- [x] Scenario: Creating a Grid Template with grid buttons (`templates.feature:Scenario 2`)
 - [ ] Scenario: Creating an Information Pane Template (`templates.feature:Scenario 3`)
 - [ ] Scenario: Creating a Message Template for alerts and notifications (`templates.feature:Scenario 4`)
 
