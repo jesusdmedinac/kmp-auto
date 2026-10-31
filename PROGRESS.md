@@ -14,7 +14,7 @@
 - [x] Scenario: Creating a List Template with sections and actions (`templates.feature:Scenario 1`)
 - [x] Scenario: Creating a Grid Template with grid buttons (`templates.feature:Scenario 2`)
 - [x] Scenario: Creating an Information Pane Template (`templates.feature:Scenario 3`)
-- [ ] Scenario: Creating a Message Template for alerts and notifications (`templates.feature:Scenario 4`)
+- [x] Scenario: Creating a Message Template for alerts and notifications (`templates.feature:Scenario 4`)
 
 ## Milestone 4: Native Platform Engines & Mappers
 - [ ] Implement `androidMain` engine (mapping `AutoScreen` & `AutoTemplate` to `androidx.car.app`)
