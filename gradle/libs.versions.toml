@@ -1,0 +1,16 @@
+[versions]
+agp = "8.8.0"
+kotlin = "2.1.10"
+coroutines = "1.10.1"
+androidx-car-app = "1.7.0"
+
+[libraries]
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+androidx-car-app = { module = "androidx.car.app:app", version.ref = "androidx-car-app" }
+androidx-car-app-testing = { module = "androidx.car.app:app-testing", version.ref = "androidx-car-app" }
+
+[plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
