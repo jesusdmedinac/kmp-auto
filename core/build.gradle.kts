@@ -39,6 +39,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.androidx.car.app)
+            implementation(libs.kotlinx.coroutines.android)
         }
 
         androidUnitTest.dependencies {

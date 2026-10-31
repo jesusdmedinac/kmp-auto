@@ -6,6 +6,7 @@ import io.github.kmpauto.core.navigation.AutoNavigator
 import io.github.kmpauto.core.navigation.AutoScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -22,6 +23,7 @@ public class AndroidNavigatorAdapter(
 
     public fun startSync() {
         navigator.stack
+            .drop(1)
             .onEach { stack ->
                 val currentDepth = stack.size
                 if (currentDepth > lastDepth) {
@@ -30,14 +32,18 @@ public class AndroidNavigatorAdapter(
                     screenManager.push(AndroidCarScreen(carContext, topScreen))
                 } else if (currentDepth < lastDepth) {
                     // Pop screens until depth matches
-                    val popsNeeded = lastDepth - currentDepth
-                    repeat(popsNeeded) {
-                        screenManager.pop()
+                    if (currentDepth == 1) {
+                        screenManager.popToRoot()
+                    } else {
+                        val popsNeeded = lastDepth - currentDepth
+                        repeat(popsNeeded) {
+                            screenManager.pop()
+                        }
                     }
-                } else if (stack.isNotEmpty()) {
+                } else if (stack.isNotEmpty() && screenManager.stackSize > 0) {
                     // Top screen was replaced (e.g. BackstackGuard REPLACE_TOP)
                     val topScreen = stack.last()
-                    val currentTop = screenManager.top
+                    val currentTop = try { screenManager.top } catch (_: Exception) { null }
                     if (currentTop is AndroidCarScreen && currentTop.autoScreen != topScreen) {
                         screenManager.pop()
                         screenManager.push(AndroidCarScreen(carContext, topScreen))

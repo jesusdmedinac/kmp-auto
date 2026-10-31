@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.androidApplication)
 }
 
 kotlin {
@@ -35,6 +35,7 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.androidx.car.app)
+            implementation(libs.androidx.car.app.automotive)
         }
     }
 }
@@ -44,7 +45,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 24
+        applicationId = "io.github.kmpauto.sample"
+        minSdk = 29
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
     }
 
     compileOptions {
