@@ -17,9 +17,9 @@
 - [x] Scenario: Creating a Message Template for alerts and notifications (`templates.feature:Scenario 4`)
 
 ## Milestone 4: Native Platform Engines & Mappers
-- [ ] Implement `androidMain` engine (mapping `AutoScreen` & `AutoTemplate` to `androidx.car.app`)
-- [ ] Implement `iosMain` engine (mapping `AutoScreen` & `AutoTemplate` to `platform.CarPlay.*`)
-- [ ] Implement reactive template invalidation (`StateFlow` & `screen.invalidate()`)
+- [x] Implement `androidMain` engine (mapping `AutoScreen` & `AutoTemplate` to `androidx.car.app`)
+- [x] Implement `iosMain` engine (mapping `AutoScreen` & `AutoTemplate` to `platform.CarPlay.*`)
+- [x] Implement reactive template invalidation (`StateFlow` & `screen.invalidate()`)
 
 ## Milestone 5: Sample Application & Integration Verification
 - [ ] Build multiplatform automotive sample app (EV Charging & POI Stations)
