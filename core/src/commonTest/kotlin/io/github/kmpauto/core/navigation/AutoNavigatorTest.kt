@@ -30,4 +30,38 @@ class AutoNavigatorTest {
         // And the top screen should match the last pushed screen
         assertEquals(screen4, navigator.top)
     }
+
+    @Test
+    fun scenario2_preventingCrashesWhenExceeding5StepLimit_replaceTopPolicy() {
+        // Given an AutoNavigator with 5 screens on the backstack (default maxDepth = 5, policy = REPLACE_TOP)
+        val screens = (1..5).map { TestScreen("Screen $it") }
+        val navigator = AutoNavigator(root = screens[0], guard = BackstackGuard(maxDepth = 5, policy = BackstackGuardPolicy.REPLACE_TOP))
+
+        for (i in 1..4) {
+            navigator.push(screens[i])
+        }
+        assertEquals(5, navigator.depth)
+        assertEquals(screens[4], navigator.top)
+
+        // When attempting to push a 6th AutoScreen without popping
+        val screen6 = TestScreen("Screen 6")
+        navigator.push(screen6)
+
+        // Then the navigator should trigger the configured BackstackGuard policy and avoid exceeding platform host limits
+        assertEquals(5, navigator.depth)
+        assertEquals(screen6, navigator.top)
+    }
+
+    @Test
+    fun scenario2_preventingCrashesWhenExceedingLimit_throwPolicy() {
+        val root = TestScreen("Root")
+        val navigator = AutoNavigator(root = root, guard = BackstackGuard(maxDepth = 2, policy = BackstackGuardPolicy.THROW_EXCEPTION))
+
+        navigator.push(TestScreen("Screen 2"))
+        assertEquals(2, navigator.depth)
+
+        kotlin.test.assertFailsWith<BackstackOverflowException> {
+            navigator.push(TestScreen("Screen 3"))
+        }
+    }
 }

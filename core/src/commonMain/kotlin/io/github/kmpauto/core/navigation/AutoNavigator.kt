@@ -5,9 +5,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Unified in-car navigation coordinator with backstack state tracking.
+ * Unified in-car navigation coordinator with backstack state tracking and depth guard protection.
  */
-public class AutoNavigator(root: AutoScreen) {
+public class AutoNavigator(
+    root: AutoScreen,
+    public val guard: BackstackGuard = BackstackGuard()
+) {
     private val _stack = MutableStateFlow(listOf(root))
     public val stack: StateFlow<List<AutoScreen>> = _stack.asStateFlow()
 
@@ -18,7 +21,24 @@ public class AutoNavigator(root: AutoScreen) {
         get() = _stack.value.last()
 
     public fun push(screen: AutoScreen) {
-        _stack.value = _stack.value + screen
+        val currentSize = _stack.value.size
+        if (currentSize >= guard.maxDepth) {
+            when (guard.policy) {
+                BackstackGuardPolicy.REPLACE_TOP -> {
+                    _stack.value = _stack.value.dropLast(1) + screen
+                }
+                BackstackGuardPolicy.THROW_EXCEPTION -> {
+                    throw BackstackOverflowException(
+                        "Attempted to push screen beyond maximum allowed vehicle backstack depth (${guard.maxDepth})."
+                    )
+                }
+                BackstackGuardPolicy.IGNORE -> {
+                    // Intentionally ignore push to maintain compliance
+                }
+            }
+        } else {
+            _stack.value = _stack.value + screen
+        }
     }
 
     public fun pop(): Boolean {

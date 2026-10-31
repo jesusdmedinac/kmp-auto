@@ -7,7 +7,7 @@
 
 ## Milestone 2: Feature - In-Car Navigation & Backstack Safety (#1)
 - [x] Scenario: Navigating forward within safety depth limits (`navigation.feature:Scenario 1`)
-- [ ] Scenario: Preventing crashes when exceeding the 5-step car backstack limit (`navigation.feature:Scenario 2`)
+- [x] Scenario: Preventing crashes when exceeding the 5-step car backstack limit (`navigation.feature:Scenario 2`)
 - [ ] Scenario: Popping screens and returning to root (`navigation.feature:Scenario 3`)
 
 ## Milestone 3: Feature - Unified Declarative Templates (#2)
