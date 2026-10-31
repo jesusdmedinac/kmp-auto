@@ -8,17 +8,21 @@ import kotlinx.coroutines.flow.asStateFlow
  * Unified in-car navigation coordinator with backstack state tracking and depth guard protection.
  */
 public class AutoNavigator(
-    root: AutoScreen,
+    root: AutoScreen? = null,
     public val guard: BackstackGuard = BackstackGuard()
 ) {
-    private val _stack = MutableStateFlow(listOf(root))
+    private val _stack = MutableStateFlow(if (root != null) listOf(root) else emptyList())
     public val stack: StateFlow<List<AutoScreen>> = _stack.asStateFlow()
 
     public val depth: Int
         get() = _stack.value.size
 
     public val top: AutoScreen
-        get() = _stack.value.last()
+        get() = _stack.value.lastOrNull() ?: error("AutoNavigator has no screens in backstack. Call setRoot(screen) first.")
+
+    public fun setRoot(screen: AutoScreen) {
+        _stack.value = listOf(screen)
+    }
 
     public fun push(screen: AutoScreen) {
         val currentSize = _stack.value.size

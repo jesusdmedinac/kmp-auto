@@ -28,3 +28,4 @@ dependencyResolutionManagement {
 }
 
 include(":core")
+include(":sample")

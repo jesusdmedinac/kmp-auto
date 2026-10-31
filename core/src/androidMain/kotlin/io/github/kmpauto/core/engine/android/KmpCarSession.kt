@@ -11,7 +11,7 @@ import io.github.kmpauto.core.navigation.AutoScreen
  */
 public abstract class KmpCarSession : Session() {
 
-    public abstract fun createRootScreen(): AutoScreen
+    public abstract fun createRootScreen(navigator: AutoNavigator): AutoScreen
 
     public var navigator: AutoNavigator? = null
         private set
@@ -19,14 +19,15 @@ public abstract class KmpCarSession : Session() {
     private var navigatorAdapter: AndroidNavigatorAdapter? = null
 
     override fun onCreateScreen(intent: Intent): Screen {
-        val root = createRootScreen()
-        val autoNavigator = AutoNavigator(root = root)
+        val autoNavigator = AutoNavigator()
+        val realRoot = createRootScreen(autoNavigator)
+        autoNavigator.setRoot(realRoot)
         this.navigator = autoNavigator
 
         val adapter = AndroidNavigatorAdapter(carContext, autoNavigator)
         adapter.startSync()
         this.navigatorAdapter = adapter
 
-        return adapter.createInitialScreen()
+        return AndroidCarScreen(carContext, realRoot)
     }
 }

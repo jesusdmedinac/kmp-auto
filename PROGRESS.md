@@ -22,5 +22,5 @@
 - [x] Implement reactive template invalidation (`StateFlow` & `screen.invalidate()`)
 
 ## Milestone 5: Sample Application & Integration Verification
-- [ ] Build multiplatform automotive sample app (EV Charging & POI Stations)
-- [ ] Verify Android Auto DHU / AAOS compatibility and CarPlay scene delegate wiring
+- [x] Build multiplatform automotive sample app (EV Charging & POI Stations)
+- [x] Verify Android Auto DHU / AAOS compatibility and CarPlay scene delegate wiring
